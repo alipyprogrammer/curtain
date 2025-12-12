@@ -29,25 +29,7 @@ from Functions.sms import send_sms_2
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 
-@api_view(['POST'])
-def add_log_user(request):
-    Data = request.data
-    print(Data)
-    ip = request.META.get("HTTP_X_FORWARDED_FOR")
-    if ip:
-        ip = ip.split(",")[0]
-    else:
-        ip = request.META.get("REMOTE_ADDR")
-    Data['ip'] = ip
 
-    serializer = UserLogSerializer(data=Data, many=False)
-    if serializer.is_valid():
-        try:
-            serializer.save(user=request.user)
-        except:
-            serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MyTokenObtainPairSerializer(serializers.Serializer):
     username = serializers.CharField()

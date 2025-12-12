@@ -4,10 +4,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.hashers import make_password
 
 
-class UserLogSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserLog
-        fields = "__all__"
 
 
 class AddressSerializer(serializers.ModelSerializer):
