@@ -12,7 +12,6 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
 
-    path('add-log-user/', views.add_log_user, name='add_log_user'),
     path('generate-captcha/', views_captcha.generate_captcha, name='generate-captcha'),
     path('check-captcha/', views_captcha.check_captcha, name='generate-captcha'),
     path('login', views.my_token_obtain_pair, name='token_obtain_pair'),
