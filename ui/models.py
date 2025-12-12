@@ -1,9 +1,10 @@
 from django.db import models
 import os
-from User.models import User
-from Product.models import *
+from user.models import User
 from django.core.exceptions import ValidationError
-from Img.models import Img
+from img.models import Img
+from django.contrib.contenttypes.models import ContentType
+
 # ==============================================
 def get_filename_ext(filepath):
     base_name = os.path.basename(filepath)
@@ -23,14 +24,13 @@ def upload_image_path_banner(instance, filename):
 
 # ==============================================
 
-
 # image Box
 #############################
 class Slider(Img):
     name    = models.CharField(max_length=200)
     mobile  = models.BooleanField(default=False)
     summery = models.TextField(max_length=350)
-    status  = models.BooleanField(default=True)    
+    status  = models.BooleanField(default=True)
     link    = models.CharField(max_length=200,  null=True,  blank=True)
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class Slider(Img):
 
 class Banner(Img):
     name    = models.CharField(max_length=250,  null=True, blank=True)
-    status  = models.BooleanField(default=True)    
+    status  = models.BooleanField(default=True)
     link    = models.CharField(max_length=200,  null=True,  blank=True)
     def __str__(self):
         return self.name
@@ -81,48 +81,20 @@ class NavBar(models.Model):
 # box
 ###########################################
 
-
 class Box(models.Model):
-    idd             = models.CharField(max_length=250, null=True, blank=True, unique=True)
-    name            = models.CharField(max_length=250, null=True, blank=True, unique=False)
-    category        = models.ManyToManyField(MainCategories, blank=True)
-    count_product   = models.IntegerField(default=0)
-    img             = models.ManyToManyField(Img, blank=True)
-    new             = models.BooleanField(default=False)
-    suggested       = models.BooleanField(default=False)
-    offer           = models.BooleanField(default=False)
-    suggested_box   = models.BooleanField(default=False)
-
-    def clean(self, *args, **kwargs):
-        if self.suggested and self.new:
-            raise ValidationError({
-                "suggested": ["انتخاب همزمان 'new' و 'suggested' مجاز نیست."],
-                "new": ["انتخاب همزمان 'new' و 'suggested' مجاز نیست."],
-            })
-        return self
-
-
+    idd                  = models.CharField(max_length=250, null=True, blank=True, unique=True)
+    name                 = models.CharField(max_length=250, null=True, blank=True, unique=False)
+    img                  = models.ManyToManyField(Img, blank=True)
+    content_type         = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=True)
+    content_type_setting = models.JSONField(null=True, blank=True)
 
 # box
 ###########################################
 
-class Home(models.Model):
+class Page(models.Model):
     header         = models.ForeignKey(NavBar, on_delete=models.SET_NULL, null=True)
     slider         = models.ManyToManyField(Slider)
     banner         = models.ManyToManyField(Banner)
     box            = models.ManyToManyField(Box, blank=True)
     status         = models.BooleanField(default=False)
     idd            = models.CharField(max_length=20, default='')
-
-
-    def save(self, *args, **kwargs):
-        if self.status:
-            homes = Home.objects.filter(status=True)
-            if homes.exists():
-                for i in homes:
-                    home = i
-                    home.status = False
-                    home.save()
-        super().save(*args, **kwargs)
-
-

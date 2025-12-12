@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'Functions',
     'Img',
     'Order',
-    'Ui',
+    'ui',
     'User',
     'Product',	
     'django.contrib.admin',
