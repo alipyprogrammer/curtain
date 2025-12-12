@@ -120,8 +120,8 @@ DATABASES = {
         "NAME": "curtain2",
         "USER": "curtain_user",
         "PASSWORD": "0@pwd@db@1",
-        "HOST": "127.0.0.1",  # یا "localhost"
-        "PORT": "5433",
+        "HOST": "localhost",  # یا "localhost"
+        "PORT": "5432",
     }
 }
 
