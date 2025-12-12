@@ -1,8 +1,8 @@
 from django.db import models
 import os
-from user.models import User
+from User.models import User
 from django.core.exceptions import ValidationError
-from img.models import Img
+from Img.models import Img
 from django.contrib.contenttypes.models import ContentType
 
 # ==============================================
