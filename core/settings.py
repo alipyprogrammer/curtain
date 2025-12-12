@@ -24,10 +24,14 @@ AUTH_USER_MODEL = 'User.User'
 SECRET_KEY = 'django-insecure-))w7j3n9$ds8z8a%!#*%h-m&jrq%txt74aejhr39mn*mbgpl59'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+ALLOWED_HOSTS = ['curtain.linooxel.com' ,'127.0.0.1']
+ALLOWED_ORIGINS = ['https://curtain.linooxel.com'] 
 DEBUG = True
+CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
-ALLOWED_HOSTS = []
-
+TIME_OUT_TOKEN_SMS_VERIFY     = 120  
+TIME_OUT_TOKEN_SMS_SEND_AGAIN = 240
+TIME_OUT_TOKEN_CAPTCHA = 120 
 
 # Application definition
 
@@ -173,9 +177,10 @@ CACHES = {
 
 #redis
 ##########################################
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOWED_ORIGINS = (
+     'HTTP://LOCALHOST:3030',
+ )
 
 LANGUAGE_CODE = 'en-us'
 

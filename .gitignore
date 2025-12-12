@@ -1,0 +1,53 @@
+# Python __pycache__ and compiled files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Django migrations
+**/migrations/
+**/migrations/*.pyc
+**/migrations/__pycache__/
+
+# Environment files
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Test reports
+htmlcov/
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Static/media files (if generated dynamically)
+staticfiles/
+media/
+
+# Local settings (optional)
+local_settings.py
