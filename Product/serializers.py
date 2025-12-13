@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import *
 import pandas as pd
-from scrape.models import Gold
 from django.core.cache import cache
 from django.db.models import F, Max, Min
 
