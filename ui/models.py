@@ -29,7 +29,7 @@ def upload_image_path_banner(instance, filename):
 class Slider(Img):
     name    = models.CharField(max_length=200)
     mobile  = models.BooleanField(default=False)
-    summery = models.TextField(max_length=350)
+    summery = models.TextField(null=True, blank=True)
     status  = models.BooleanField(default=True)
     link    = models.CharField(max_length=200,  null=True,  blank=True)
     def __str__(self):
