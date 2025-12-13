@@ -16,7 +16,6 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
-from .serializer import *
 from rest_framework import status, filters
 from datetime import datetime
 from rest_framework.viewsets import ModelViewSet
