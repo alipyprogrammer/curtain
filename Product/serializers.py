@@ -48,7 +48,7 @@ class SubcategoriesSerializer(serializers.ModelSerializer):
     
     @staticmethod
     def get_image(obj):
-        img_url = f"https://curtain.linooxel.com/{obj.image}"
+        img_url = f"https://curtain.linooxel.com/media/{obj.image}"
         return img_url
 
 
