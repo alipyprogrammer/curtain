@@ -68,6 +68,7 @@ class BoxSerializer(serializers.ModelSerializer):
 
         serializer_map = {
             "product": "Product.serializers.ProductSerializer",
+            "subcategories" : "Product.serializers.SubcategoriesSerializer"
         }
 
         model_name = model._meta.model_name
