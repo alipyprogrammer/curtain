@@ -36,6 +36,7 @@ class MainCategoriesSerializer(serializers.ModelSerializer):
 
 class SubcategoriesSerializer(serializers.ModelSerializer):
     main  = serializers.SerializerMethodField(read_only=True)
+    image  = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Subcategories
@@ -44,6 +45,13 @@ class SubcategoriesSerializer(serializers.ModelSerializer):
     def get_main(obj):
         main_category = {"name": obj.main.name, "slug": obj.main.slug}
         return main_category
+    
+    @staticmethod
+    def get_image(obj):
+        img_url = f"https://curtain.linooxel.com/{obj.image}"
+        return img_url
+
+
 
 
 
