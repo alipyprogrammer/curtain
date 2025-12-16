@@ -79,8 +79,6 @@ def product_detail(request, slug, main_category, sub_category):
     return Response(serializer_class.data)
 
 
-
-
 class ProductFilter(APIView):
     def get(self, request):
         page = int(request.GET.get('page'))
@@ -107,9 +105,6 @@ class ProductFilter(APIView):
             data={"product":serialized_data.data, "page":product_page},
             status=status.HTTP_200_OK
         )
-
-
-
 
 
 @api_view(['GET'])
@@ -202,3 +197,14 @@ def product_category_list(request, main_category, sub_category=None):
 
     return Response(dic_send)
 
+
+
+@api_view(['POST'])
+def installment_price_calculator(request):
+    prod_id = request.data.get('prod_id')
+    product_get = Product.objects.get(id = prod_id )
+    period = product_get.properties.installment_period_month
+    precost = product_get.properties.pre_cost
+    finall_price = request.data.get('final_price')
+    month_pay = (finall_price - precost) / period
+    return Response(status = 200,data = {'month_pay':month_pay})

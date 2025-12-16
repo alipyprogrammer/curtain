@@ -12,8 +12,11 @@ class PropertiesSerializer(serializers.ModelSerializer):
     final_price = serializers.SerializerMethodField(read_only=True)
     
     def get_final_price(self,obj):
-        return ((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price
-
+        if obj.installment:
+            return (((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price) * (1 - obj.normal_discount)
+        else:
+            return (((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price) * (1 - obj.installment_discount)
+        
     class Meta:
         model = Properties
         fields = '__all__'
