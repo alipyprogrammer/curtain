@@ -245,6 +245,7 @@ class Product(models.Model):
                               null=True,
                               blank=True
                               )
+    price = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     count_in_stock = models.BooleanField(default=False)
     delete_status  = models.BooleanField(default=False)
     draft          = models.BooleanField(default=True)
