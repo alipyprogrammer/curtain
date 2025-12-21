@@ -226,7 +226,7 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
     attributes  = models.ManyToManyField(Attributes, blank=True)
-    properties = models.ManyToManyField(Properties)
+    properties = models.ManyToManyField(Properties, blank=True)
     rating = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
     numReviews = models.IntegerField(null=True, blank=True, default=0)
     create_at = models.DateField(auto_now_add=True)
