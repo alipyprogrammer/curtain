@@ -189,4 +189,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return gallery
 
+    @staticmethod
+    def get_properties(obj):
+        properties = obj.properties.values()
+        return properties
 
