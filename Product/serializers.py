@@ -150,7 +150,6 @@ class ProductSerializer(serializers.ModelSerializer):
             '_id','name', 'image', 'price', 'count_in_stock',
             'gallery', 'slug', 'properties',
             'main_category', 'sub_category',
-            'accessory',
             'title_seo',
             'description_seo',
             'attributes',
