@@ -145,6 +145,7 @@ class ProductSerializer(serializers.ModelSerializer):
     main_category = serializers.SerializerMethodField(read_only=True)
     sub_category = serializers.SerializerMethodField(read_only=True)
     attributes = serializers.SerializerMethodField(read_only=True)
+    image = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
         fields = [
