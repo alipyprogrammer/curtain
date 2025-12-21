@@ -3,6 +3,7 @@ from .models import *
 import pandas as pd
 from django.core.cache import cache
 from django.db.models import F, Max, Min
+from django.conf import settings
 
 
 
@@ -48,7 +49,7 @@ class SubcategoriesSerializer(serializers.ModelSerializer):
     
     @staticmethod
     def get_image(obj):
-        img_url = f"https://curtain.linooxel.com/media/{obj.image}"
+        img_url = f"https://{settings.DOMAIN}/media/{obj.image}" if obj.image else None 
         return img_url
 
 
@@ -160,6 +161,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
     @staticmethod
+    def get_image(obj):
+        img =   f"https://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
+        return img
+
+    @staticmethod
     def get_attributes(obj):
         attributes = obj.attributes.values("name", "comment")
 
@@ -177,6 +183,7 @@ class ProductSerializer(serializers.ModelSerializer):
         if sub_category is not None:
             sub_category = {"name": obj.sub_category.name, "slug": obj.sub_category.slug}
         return sub_category
+
 
 
 
