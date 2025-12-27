@@ -165,8 +165,11 @@ class Properties(models.Model):
     height          = models.DecimalField(default=1.0, max_digits=4, decimal_places=2)
     send_salary     = models.DecimalField(default=1.0, max_digits=4, decimal_places=2)
     frame_price     = models.DecimalField(default=1.0, max_digits=4, decimal_places=2)
-
-
+    normal_discount = models.DecimalField(default=0, max_digits=4, decimal_places=2)
+    installment = models.BooleanField(default=False)
+    installment_discount = models.DecimalField(default=0, max_digits=4, decimal_places=2)
+    installment_period_month = models.IntegerField(default=0, null=True, blank=True)
+    pre_cost = models.DecimalField(max_digits=15, decimal_places=0)
     def __str__(self):
         return f"{self.name} - {self.id}"
     class Meta:
@@ -236,7 +239,6 @@ class Product(models.Model):
     title_seo = models.CharField(max_length=55)
     description_seo = models.TextField(max_length=139)
     gallery = models.ManyToManyField(Gallery, blank=True)
-    pre_cost_percent = models.DecimalField(max_digits=15, decimal_places=0)
     available = models.BooleanField()
     date_available = models.IntegerField(default=3)
     gender = models.CharField(max_length=9,

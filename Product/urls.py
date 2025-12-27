@@ -1,8 +1,5 @@
 from django.urls import path, include, re_path
 from . import views
-
-
-
 urlpatterns = [
     #Detail
     re_path(
@@ -19,6 +16,6 @@ urlpatterns = [
             r'product/(?P<main_category>[-\w]+)/',
             views.product_category_list, name="ProductDetail"
     )
+    path('installment_price_calculator/', installment_price_calculator),
 
 ]
-    
