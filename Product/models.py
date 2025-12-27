@@ -169,7 +169,7 @@ class Properties(models.Model):
     installment = models.BooleanField(default=False)
     installment_discount = models.DecimalField(default=0, max_digits=4, decimal_places=2)
     installment_period_month = models.IntegerField(default=0, null=True, blank=True)
-    pre_cost = models.DecimalField(max_digits=15, decimal_places=0)
+    pre_cost_percent = models.DecimalField(max_digits=15, decimal_places=0)
     def __str__(self):
         return f"{self.name} - {self.id}"
     class Meta:

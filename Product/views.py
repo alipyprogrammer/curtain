@@ -203,7 +203,9 @@ def installment_price_calculator(request):
     prod_id = request.data.get('prod_id')
     product_get = Product.objects.get(id = prod_id )
     period = product_get.properties.installment_period_month
-    precost = product_get.properties.pre_cost
+    precost = product_get.properties.pre_cost_percent
     finall_price = request.data.get('final_price')
-    month_pay = (finall_price - precost) / period
+    month_pay = ( finall_price - (finall_price * precost) ) / period
     return Response(status = 200,data = {'month_pay':month_pay})
+
+#(price - (price * 20%)) /  3 month (period)
