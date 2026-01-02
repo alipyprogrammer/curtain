@@ -70,7 +70,7 @@ def add_tax(x):
 
 
 class ProductListNSerializer(serializers.ModelSerializer):
-    properties     = PropertiesSerializer()
+    properties  = serializers.SerializerMethodField(read_only=True)
     main_category  = serializers.SerializerMethodField(read_only=True)
     sub_category   = serializers.SerializerMethodField(read_only=True)
     gallery        = serializers.SerializerMethodField(read_only=True)
@@ -89,6 +89,15 @@ class ProductListNSerializer(serializers.ModelSerializer):
     def get_gallery(obj):
         gallery = obj.gallery.values("image")
         return gallery
+    
+
+    @staticmethod
+    def get_properties(obj):
+        properties = PropertiesSerializer(obj.properties, many=True).data
+        return properties
+    
+
+
     
     @staticmethod
     def get_main_category(obj):
