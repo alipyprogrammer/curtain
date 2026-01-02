@@ -128,7 +128,7 @@ def product_category_list(request, main_category, sub_category=None):
         number_disp_prod_start = int(page - 1) * 10
         number_disp_prod_end = int(page) * 10
         query = request.GET.dict()
-        del query['page']
+        query.pop('page', None)
         query = {k: v for k, v in query.items() if v and v!="undefined"}
         get_sub_category = get_object_or_404(
             Subcategories, slug=sub_category, main__slug=main_category
