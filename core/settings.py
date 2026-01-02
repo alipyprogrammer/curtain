@@ -23,10 +23,10 @@ AUTH_USER_MODEL = 'User.User'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-))w7j3n9$ds8z8a%!#*%h-m&jrq%txt74aejhr39mn*mbgpl59'
-DOMAIN =  "curtain.linooxel.com"
+DOMAIN =  "curtain.linooxel.com:5042"
 # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = [ DOMAIN ,'127.0.0.1']
-ALLOWED_ORIGINS = [f'http://{DOMAIN}:5042'] 
+ALLOWED_ORIGINS = [f'http://{DOMAIN}'] 
 
 DEBUG = True
 CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
