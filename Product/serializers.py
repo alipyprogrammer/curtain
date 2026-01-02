@@ -6,6 +6,8 @@ from django.db.models import F, Max, Min
 from django.conf import settings
 from django.db.models import Avg, Count
 
+from django.db.models import Value
+from django.db.models.functions import Concat
 
 
 class PropertiesSerializer(serializers.ModelSerializer):
@@ -254,12 +256,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_gallery(obj):
-        gallery = obj.gallery.values(
-            'image',
-            'name',
-        )
+        BASE_URL = "http://curtain.linooxel.com:5042/media/"
+
+        gallery = obj.gallery.annotate(
+            full_image_url=Concat(Value(BASE_URL), 'image')
+        ).values('full_image_url', 'name')
 
         return gallery
+
 
     @staticmethod
     def get_properties(obj):
