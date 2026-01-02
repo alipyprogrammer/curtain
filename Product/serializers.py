@@ -201,7 +201,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
     def get_final_price(self, obj):
-        obj = obj.obj.properties.first()
+        obj = obj.properties.first()
         if obj.installment:
             return (((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price) * (1 - obj.normal_discount)
         else:
