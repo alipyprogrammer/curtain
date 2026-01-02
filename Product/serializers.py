@@ -159,7 +159,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'description_seo',
             'attributes',
             'description',
-            'pre_cost_percent',
+            # 'pre_cost_percent',
             'date_available'
         ]
 
