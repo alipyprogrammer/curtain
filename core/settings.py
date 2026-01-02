@@ -25,7 +25,7 @@ AUTH_USER_MODEL = 'User.User'
 SECRET_KEY = 'django-insecure-))w7j3n9$ds8z8a%!#*%h-m&jrq%txt74aejhr39mn*mbgpl59'
 DOMAIN =  "curtain.linooxel.com:5042"
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = [ DOMAIN ,'127.0.0.1']
+ALLOWED_HOSTS = [ DOMAIN, 'curtain.linooxel.com' ,'127.0.0.1']
 ALLOWED_ORIGINS = [f'http://{DOMAIN}'] 
 
 DEBUG = True
