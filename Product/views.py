@@ -124,7 +124,7 @@ def product_category_list(request, main_category, sub_category=None):
 
 
     elif main_category and sub_category:
-        page = int(request.GET.get('page'))
+        page = int(request.GET.get('page', 1))
         number_disp_prod_start = int(page - 1) * 10
         number_disp_prod_end = int(page) * 10
         query = request.GET.dict()
