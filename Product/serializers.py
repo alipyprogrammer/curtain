@@ -258,12 +258,15 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_gallery(obj):
         BASE_URL = "http://curtain.linooxel.com:5042/media/"
 
-        gallery = obj.gallery.annotate(
-            full_image_url=Concat(Value(BASE_URL), 'image')
-        ).values('full_image_url', 'name')
+        gallery = obj.gallery.values('image', 'name')
 
-        return gallery
-
+        return [
+            {
+                'image': f"{BASE_URL}{item['image']}" if item['image'] else None,
+                'name': item['name']
+            }
+            for item in gallery
+        ]
 
     @staticmethod
     def get_properties(obj):
