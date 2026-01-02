@@ -8,7 +8,7 @@ from django.conf import settings
 
 
 class PropertiesSerializer(serializers.ModelSerializer):
-    accessory  = serializers.SerializerMethodField(read_only=True)
+    # accessory  = serializers.SerializerMethodField(read_only=True)
     final_price = serializers.SerializerMethodField(read_only=True)
     
     def get_final_price(self,obj):
