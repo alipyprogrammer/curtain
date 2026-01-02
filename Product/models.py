@@ -236,6 +236,8 @@ class Product(models.Model):
     suggested = models.BooleanField(default=False)
     new = models.BooleanField(default=True)
     slug = models.CharField(max_length=1000, unique=True)
+    code = models.IntegerField(default=2)
+    warranty = models.CharField(max_length=150, null=True, blank=True)
     title_seo = models.CharField(max_length=55)
     description_seo = models.TextField(max_length=139)
     gallery = models.ManyToManyField(Gallery, blank=True)
@@ -247,9 +249,9 @@ class Product(models.Model):
                               null=True,
                               blank=True
                               )
-    price = models.DecimalField(max_digits=15, decimal_places=0, default=0)
+    # price = models.DecimalField(max_digits=15, decimal_places=0, default=0)
     count_in_stock = models.BooleanField(default=False)
-    delete_status  = models.BooleanField(default=False)
+    ratingdelete_status  = models.BooleanField(default=False)
     draft          = models.BooleanField(default=True)
     even_type      = models.ManyToManyField(EventType, blank=True)
     gif            = models.FileField(upload_to=upload_image_path_product_gif, null=True, blank=True)
@@ -282,10 +284,10 @@ class Product(models.Model):
 class Reviews(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
     rating = models.IntegerField(null=True, blank=True, default=0)
     comment = models.TextField(null=True, blank=True)
     _id = models.AutoField(primary_key=True, editable=False)
+    create_at = models.DateField(auto_now_add=True, null=True)
 
     def __str__(self):
         return str(self.rating)

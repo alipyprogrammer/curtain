@@ -4,6 +4,7 @@ import pandas as pd
 from django.core.cache import cache
 from django.db.models import F, Max, Min
 from django.conf import settings
+from django.db.models import Avg, Count
 
 
 
@@ -149,7 +150,16 @@ class ProductListSerializer(serializers.ModelSerializer):
         return sub_category
 
 
-
+class ReviewSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Reviews
+        fields = ['_id', 'name', 'rating', 'comment']
+    
+    def get_name(self, obj):
+        name = obj.user.name
+        return name
 
 class ProductSerializer(serializers.ModelSerializer):
     properties = serializers.SerializerMethodField(read_only=True)
@@ -158,6 +168,14 @@ class ProductSerializer(serializers.ModelSerializer):
     sub_category = serializers.SerializerMethodField(read_only=True)
     attributes = serializers.SerializerMethodField(read_only=True)
     image = serializers.SerializerMethodField(read_only=True)
+    
+    price_per_meter = serializers.SerializerMethodField(read_only=True)
+    final_price     = serializers.SerializerMethodField(read_only=True)
+
+    average_rating = serializers.SerializerMethodField()
+    reviews_count = serializers.SerializerMethodField()
+    reviews = serializers.SerializerMethodField()
+    
     class Meta:
         model = Product
         fields = [
@@ -169,8 +187,42 @@ class ProductSerializer(serializers.ModelSerializer):
             'attributes',
             'description',
             # 'pre_cost_percent',
-            'date_available'
+            'date_available',
+
+            'price_per_meter',
+            'final_price',
+
+            'average_rating',
+            'reviews_count',
+            'reviews'
         ]
+
+        
+
+
+    def get_final_price(self, obj):
+        obj = obj.obj.properties.first()
+        if obj.installment:
+            return (((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price) * (1 - obj.normal_discount)
+        else:
+            return (((obj.length * obj.width) * obj.base_price) + obj.send_salary + obj.frame_price) * (1 - obj.installment_discount)
+
+
+    def get_price_per_meter(self, obj):
+        price = obj.obj.properties.first().base_price
+        return price
+
+
+    def get_average_rating(self, obj):
+        avg = obj.reviews_set.aggregate(Avg('rating'))['rating__avg']
+        return round(avg, 2) if avg else 0
+    
+    def get_reviews_count(self, obj):
+        return obj.reviews_set.count()
+
+    def get_reviews(self, obj):
+        reviews = obj.reviews_set.all()
+        return ReviewSerializer(reviews, many=True).data
 
 
     @staticmethod
