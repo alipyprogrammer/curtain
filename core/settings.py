@@ -155,7 +155,8 @@ CHANNEL_LAYERS = {
     },
 }
 ###########################################
-CELERY_BROKER_URL = "amqp://root:0%40pwd%40rabitmq%401@localhost:5672/pez"
+# CELERY_BROKER_URL = "amqp://root:0%40pwd%40rabitmq%401@localhost:5672/pez"
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/2"
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
@@ -166,16 +167,17 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_RESULT_EXPIRES = 3600 
 ###########################################
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        "LOCATION": "redis://:pezeshket@localhost:6379/0",
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6380/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
         },
-        'TIMEOUT': 300, 
+        "TIMEOUT": 300,
     }
 }
+
 
 #redis
 ##########################################
