@@ -53,7 +53,7 @@ class SubcategoriesSerializer(serializers.ModelSerializer):
     
     @staticmethod
     def get_image(obj):
-        img_url = f"https://{settings.DOMAIN}/media/{obj.image}" if obj.image else None 
+        img_url = f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None 
         return img_url
 
 
@@ -227,7 +227,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_image(obj):
-        img =   f"https://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
+        img =   f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
         return img
 
     @staticmethod
