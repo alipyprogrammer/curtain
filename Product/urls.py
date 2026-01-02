@@ -15,7 +15,7 @@ urlpatterns = [
     re_path(
             r'product/(?P<main_category>[-\w]+)/',
             views.product_category_list, name="ProductDetail"
-    )
-    path('installment_price_calculator/', installment_price_calculator),
+    ),
+    path('installment_price_calculator/', views.installment_price_calculator),
 
 ]

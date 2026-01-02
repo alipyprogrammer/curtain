@@ -80,7 +80,7 @@ def product_detail(request, slug, main_category, sub_category):
 
 class ProductFilter(APIView):
     def get(self, request):
-        page = int(request.GET.get('page'))
+        page = int(request.GET.get('page', 1))
         number_disp_prod_start = int(page - 1) * 10
         number_disp_prod_end = int(page) * 10
         query_price = request.GET.dict()
@@ -158,24 +158,24 @@ def product_category_list(request, main_category, sub_category=None):
         # get_product_count = get_product.count()
         # pagination_no = get_product_count // 10
 
-        get_max_price = Product.objects.filter(
-            main_category__slug=main_category,
-            sub_category__slug=sub_category
-        ).aggregate(Max('properties__help_price'))['properties__help_price__max']
+        # get_max_price = Product.objects.filter(
+        #     main_category__slug=main_category,
+        #     sub_category__slug=sub_category
+        # ).aggregate(Max('properties__help_price'))['properties__help_price__max']
 
-        get_min_price = Product.objects.filter(
-            main_category__slug=main_category,
-            sub_category__slug=sub_category
-        ).aggregate(Min('properties__help_price'))['properties__help_price__min']
+        # get_min_price = Product.objects.filter(
+        #     main_category__slug=main_category,
+        #     sub_category__slug=sub_category
+        # ).aggregate(Min('properties__help_price'))['properties__help_price__min']
 
         event_type = EventType.objects.all().values("id","name")
 
 
 
-        dic_send["setting"]["price"] = {
-            "max" : get_max_price,
-            "min" : get_min_price
-        }
+        # dic_send["setting"]["price"] = {
+        #     "max" : get_max_price,
+        #     "min" : get_min_price
+        # }
         dic_send["setting"]["event"] = event_type
 
         get_product = ProductListNSerializer(get_product, many=True)
