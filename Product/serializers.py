@@ -209,7 +209,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
     def get_price_per_meter(self, obj):
-        price = obj.obj.properties.first().base_price
+        price = obj.properties.first().base_price
         return price
 
 
