@@ -107,11 +107,6 @@ class ProductListNSerializer(serializers.ModelSerializer):
         ]
 
 
-    def get_image(obj):
-        img =   f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
-        return img
-
-
     def get_final_price(self, obj):
         obj = obj.properties.first()
         if obj.installment:
@@ -135,6 +130,12 @@ class ProductListNSerializer(serializers.ModelSerializer):
     def get_reviews(self, obj):
         reviews = obj.reviews_set.all()
         return ReviewSerializer(reviews, many=True).data
+
+    @staticmethod
+    def get_image(obj):
+        img =   f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
+        return img
+
 
     @staticmethod
     def get_gallery(obj):
