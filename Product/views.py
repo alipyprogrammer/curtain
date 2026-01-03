@@ -111,77 +111,43 @@ def product_category_list(request, main_category, sub_category=None):
     dic_send = {}
 
 
-
-    if main_category and not sub_category:
-        get_category = get_object_or_404(
-            MainCategories, slug=main_category,
-        )
-
-        dic_send['category_detail'] = MainCategoriesSerializer(
-            get_category
-        ).data
-
-
-
-    elif main_category and sub_category:
-        page = int(request.GET.get('page', 1))
-        number_disp_prod_start = int(page - 1) * 10
-        number_disp_prod_end = int(page) * 10
-        query = request.GET.dict()
-        query.pop('page', None)
-        query = {k: v for k, v in query.items() if v and v!="undefined"}
+    if not sub_category:
+        get_category = get_object_or_404(MainCategories, slug=main_category)
+        dic_send['category_detail'] = MainCategoriesSerializer(get_category).data
+    else:
         get_sub_category = get_object_or_404(
             Subcategories, slug=sub_category, main__slug=main_category
         )
-
-
-        dic_send['category_detail'] = SubcategoriesSerializer(
-            get_sub_category, many=False
-        ).data
-        dic_send["setting"] = {}
-        get_product = Product.objects.filter(
-            main_category__slug=main_category,
-            sub_category__slug=sub_category,
-            draft=False
-
-        ).filter(**query)
-
-        product_count = get_product.count()
-        product_page = product_count // 10
-        get_product = get_product.order_by('-create_at')[number_disp_prod_start:number_disp_prod_end]
-
-        dic_send["setting"]['page'] = product_page
-
-
-
-
-        # get_product_count = get_product.count()
-        # pagination_no = get_product_count // 10
-
-        # get_max_price = Product.objects.filter(
-        #     main_category__slug=main_category,
-        #     sub_category__slug=sub_category
-        # ).aggregate(Max('properties__help_price'))['properties__help_price__max']
-
-        # get_min_price = Product.objects.filter(
-        #     main_category__slug=main_category,
-        #     sub_category__slug=sub_category
-        # ).aggregate(Min('properties__help_price'))['properties__help_price__min']
-
-        event_type = EventType.objects.all().values("id","name")
-
-
-
-        # dic_send["setting"]["price"] = {
-        #     "max" : get_max_price,
-        #     "min" : get_min_price
-        # }
-        dic_send["setting"]["event"] = event_type
-
-        get_product = ProductListNSerializer(get_product, many=True)
-        dic_send['product'] = get_product.data
-        dic_send['event_list'] = EventType.objects.all().values("id", "name")
-
+        dic_send['category_detail'] = SubcategoriesSerializer(get_sub_category, many=False).data
+    
+    page = int(request.GET.get('page', 1))
+    number_disp_prod_start = (page - 1) * 10
+    number_disp_prod_end = page * 10
+    
+    query = request.GET.dict()
+    query.pop('page', None)
+    query = {k: v for k, v in query.items() if v and v != "undefined"}
+    
+    product_filter = {
+        'main_category__slug': main_category,
+        'draft': False
+    }
+    if sub_category:
+        product_filter['sub_category__slug'] = sub_category
+    
+    get_product = Product.objects.filter(**product_filter).filter(**query)
+    
+    product_count = get_product.count()
+    product_page = product_count // 10
+    get_product = get_product.order_by('-create_at')[number_disp_prod_start:number_disp_prod_end]
+    
+    dic_send["setting"] = {
+        'page': product_page,
+        'event': EventType.objects.all().values("id", "name")
+    }
+    
+    dic_send['product'] = ProductListNSerializer(get_product, many=True).data
+    dic_send['event_list'] = EventType.objects.all().values("id", "name")
 
 
     get_sub_category = Subcategories.objects.filter(
