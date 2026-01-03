@@ -76,6 +76,7 @@ class ProductListNSerializer(serializers.ModelSerializer):
     properties  = serializers.SerializerMethodField(read_only=True)
     main_category  = serializers.SerializerMethodField(read_only=True)
     sub_category   = serializers.SerializerMethodField(read_only=True)
+    image = serializers.SerializerMethodField(read_only=True)
     gallery        = serializers.SerializerMethodField(read_only=True)
 
 
@@ -104,6 +105,12 @@ class ProductListNSerializer(serializers.ModelSerializer):
             'reviews_count',
             'reviews'
         ]
+
+
+   @staticmethod
+    def get_image(obj):
+        img =   f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
+        return img
 
 
     def get_final_price(self, obj):
