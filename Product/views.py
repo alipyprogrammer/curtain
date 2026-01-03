@@ -118,7 +118,10 @@ def product_category_list(request, main_category, sub_category=None):
         get_sub_category = get_object_or_404(
             Subcategories, slug=sub_category, main__slug=main_category
         )
+        get_category = get_object_or_404(MainCategories, slug=main_category)
+
         dic_send['category_detail'] = SubcategoriesSerializer(get_sub_category, many=False).data
+        dic_send['main_category'] = MainCategoriesSerializer(get_category, many=False).data
     
     page = int(request.GET.get('page', 1))
     number_disp_prod_start = (page - 1) * 10
