@@ -107,7 +107,6 @@ class ProductListNSerializer(serializers.ModelSerializer):
         ]
 
 
-   @staticmethod
     def get_image(obj):
         img =   f"http://{settings.DOMAIN}/media/{obj.image}" if obj.image else None
         return img
